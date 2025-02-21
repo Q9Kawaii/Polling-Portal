@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Studentsignup.css">
+    <script src="https://kit.fontawesome.com/8fada4f271.js" crossorigin="anonymous"></script>
+
+    <!-- ✅ Correct Firebase SDK URLs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <title>Student Sign Up</title>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <p>Student Sign Up</p>
+            <a href="index.html"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <button onclick="googleSignUp('Student')" class="Sign_up">SignUp/SignIn as Student</button>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDS79FNi8oEhUWKvdvNOPgEDIFSay4Wj1M",
+            authDomain: "infinity-try.firebaseapp.com",
+            projectId: "infinity-try",
+            storageBucket: "infinity-try.appspot.com", 
+            messagingSenderId: "326631894819",
+            appId: "1:326631894819:web:6b50d91212a260af792696",
+            measurementId: "G-W55EB5PVH7"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firestore & Auth
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        function googleSignUp(role) {
+            console.log("pressed");
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    if (user) {
+                        const userRef = db.collection("users").doc(user.uid);
+
+                        // Check if user already exists in Firestore
+                        userRef.get().then((doc) => {
+                            if (!doc.exists) {
+                                // If user is new, store their details in Firestore
+                                userRef.set({
+                                    name: user.displayName,
+                                    email: user.email,
+                                    role: role, // Assign role (student or Student)
+                                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                                }).then(() => {
+                                    console.log("User signed up successfully!");
+                                    alert("Sign-Up Successful! Redirecting...");
+                                    // Redirect based on role
+                                    if (role === "Student") {
+                                        window.location.href = "Admin.html";
+                                    } else {
+                                        alert("No  Here!");
+                                    }
+                                }).catch(error => console.error("Error saving user data:", error));
+                            } else {
+                                // ✅ Check role of the existing user
+        const existingRole = doc.data().role;
+        if (existingRole === "Student") {
+            alert("Welcome back, Student!");
+            window.location.href = "Student.html";  // Redirect Student to Admin panel
+        } else {
+            alert("No teachers Here! hehe");
+        }
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Google Sign-Up Error:", error);
+                });
+        }
+    </script>
+</body>
+</html>
