@@ -33,8 +33,8 @@
     align-items: center;
     height: 100vh;
     /* background: #121212; */
-    background:  radial-gradient(circle, #1d1674, #0c0b20);
-    color: #539aa3;
+    background:  radial-gradient(circle, #473164, #0c0b20);
+    color: #FFffff;
 }
 button{
     margin: 10px;

@@ -6,11 +6,15 @@
     <title>Create New Poll</title>
     <script src="https://kit.fontawesome.com/8fada4f271.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="CSS/admin.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 </head>
 <header>
     <div class="nav">
         <p>Create New Poll</p>
-        <a href="index.html"><i class="fa-solid fa-house"></i></a>
+        <a href="index.html" ><i class="fa-solid fa-house"></i></a>
     </div>
 </header>
 <style>
@@ -23,11 +27,71 @@
         box-sizing: border-box;
         box-shadow: 5px 5px 15px rgba(0, 0, 0, 1);
     }
+    .container button{
+        width: 100px;
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 1);
+    }
 </style>
 <body>
     
     <div class="container">
-        <input type="text" placeholder="your question here !">
+        <input type="text" id="questionInput" placeholder="your question here !">
+        <button onclick="addQuestion()">Submit</button>
+        <p id="statusMessage"></p>
     </div> 
+    <script>
+        // ✅ Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDS79FNi8oEhUWKvdvNOPgEDIFSay4Wj1M",
+            authDomain: "infinity-try.firebaseapp.com",
+            projectId: "infinity-try",
+            storageBucket: "infinity-try.appspot.com",
+            messagingSenderId: "326631894819",
+            appId: "1:326631894819:web:6b50d91212a260af792696",
+            measurementId: "G-W55EB5PVH7"
+        };
+
+        // ✅ Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ✅ Function to Add Question
+        function addQuestion() {
+            const questionText = document.getElementById("questionInput").value;
+            const statusMessage = document.getElementById("statusMessage");
+
+            if (questionText.trim() === "") {
+                statusMessage.innerText = "❌ Question cannot be empty!";
+                return;
+            }
+
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    // ✅ Add question with timestamp
+                    db.collection("Questions").add({
+                        question: questionText,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    .then(() => {
+                        statusMessage.innerText = "✅ Question added successfully!";
+                        document.getElementById("questionInput").value = ""; // Clear input
+                    })
+                    .catch(error => {
+                        statusMessage.innerText = "❌ Error: " + error.message;
+                    });
+                } else {
+                    statusMessage.innerText = "❌ Please log in first.";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
