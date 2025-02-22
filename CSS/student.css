@@ -4,12 +4,17 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
+body{
+    align-items: center;
+    justify-content: center;
+}
 .nav {
     width: 100%;
-    background: #1E1E1E;
-    color: #539aa3;
+    background: #2c2c2c21;
+    color: #FFffff;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: 700;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     padding: 15px;
     position: fixed;
     top: 0;
@@ -22,12 +27,55 @@
 .nav i{
     margin-right: 10px;
 }
+.nav a i{
+    color: #FFffff;
+}
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #121212;
+    /* background: #121212; */
+    background:  radial-gradient(circle, #1d1674, #0c0b20);
     color: #539aa3;
+}
+
+#questionDisplay{
+    padding-bottom: 7px;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    background-color: #0B192C;
+    color: #F4EDD3;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 200;
+    height: 200px;
+    width: 300px;
+}
+.card form{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+.card form input{
+    padding: 3px;
+    margin: 3px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1E3E62;
+}
+.card form button{
+    padding: 3px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #FF6500;
 }

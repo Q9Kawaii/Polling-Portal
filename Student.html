@@ -27,24 +27,26 @@
 
     <!-- Main Container -->
     <div class="container">
-        <p id="questionDisplay">Loading Question...</p>
-        
-        <!-- Form for Poll Submission -->
-        <form class="form" name="submit-to-google-sheet">
-            <input  type="text" name="Name" placeholder="Your Name" required>
-            <input type="text" name="ID" placeholder="Your ID" required>
-            <input type="text" name="message" placeholder="Your msg" required>
-            <input type="hidden" name="Question" id="hiddenQuestion">
-            <button type="submit">Submit</button>
-        </form>
-
-        <!-- Loading Indicator -->
-        <div id="loader" style="display:none;">
-            <p>Loading...</p>
+        <div class="card">
+            <h2 id="questionDisplay">Loading Question...</h2>
+            
+            <!-- Form for Poll Submission -->
+            <form class="form" name="submit-to-google-sheet">
+                <input  type="text" name="Name" placeholder="Your Name" required>
+                <input type="text" name="ID" placeholder="Your ID" required>
+                <input type="text" name="message" placeholder="Your msg" required>
+                <input type="hidden" name="Question" id="hiddenQuestion">
+                <button type="submit">Submit</button>
+            </form>
+    
+            <!-- Loading Indicator -->
+            <div id="loader" style="display:none;">
+                <p>Loading...</p>
+            </div>
+            
+            <!-- Success/Error Message Display -->
+            <div id="msg"></div>
         </div>
-        
-        <!-- Success/Error Message Display -->
-        <div id="msg"></div>
     </div>
 
     <script>

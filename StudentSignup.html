@@ -60,27 +60,22 @@
                                 userRef.set({
                                     name: user.displayName,
                                     email: user.email,
-                                    role: role, // Assign role (student or Student)
+                                    role: role, // Assign role (Student)
                                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                                 }).then(() => {
                                     console.log("User signed up successfully!");
-                                    alert("Sign-Up Successful! Redirecting...");
-                                    // Redirect based on role
                                     if (role === "Student") {
                                         window.location.href = "Admin.html";
-                                    } else {
-                                        alert("No  Here!");
                                     }
                                 }).catch(error => console.error("Error saving user data:", error));
                             } else {
                                 // ✅ Check role of the existing user
-        const existingRole = doc.data().role;
-        if (existingRole === "Student") {
-            alert("Welcome back, Student!");
-            window.location.href = "Student.html";  // Redirect Student to Admin panel
-        } else {
-            alert("No teachers Here! hehe");
-        }
+                                const existingRole = doc.data().role;
+                                if (existingRole === "Student") {
+                                    window.location.href = "Student.html";  // Redirect Student to Admin panel
+                                } else {
+                                    alert("No teachers here! hehe");
+                                }
                             }
                         });
                     }
