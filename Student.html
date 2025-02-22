@@ -31,9 +31,10 @@
         
         <!-- Form for Poll Submission -->
         <form class="form" name="submit-to-google-sheet">
-            <input type="text" name="Name" placeholder="Your Name" required>
+            <input  type="text" name="Name" placeholder="Your Name" required>
             <input type="text" name="ID" placeholder="Your ID" required>
             <input type="text" name="message" placeholder="Your msg" required>
+            <input type="hidden" name="Question" id="hiddenQuestion">
             <button type="submit">Submit</button>
         </form>
 
@@ -82,6 +83,7 @@
                             const latestQuestion = doc.data().question; // Ensure correct field name
                             console.log("Latest Question:", latestQuestion);
                             document.getElementById("questionDisplay").innerText = latestQuestion;
+                            document.getElementById("hiddenQuestion").value = latestQuestion;
                         });
                     } else {
                         console.warn("No questions found in Firestore.");
@@ -94,33 +96,51 @@
         // Call function to fetch the latest question
         fetchLatestQuestion();
 
-        // Google Sheets Form Submission
+        const idInput = document.getElementsByName("ID")[0];
+        const messageInput = document.getElementsByName("message")[0];
+
+        // Update the name attribute of the "message" input dynamically
+        idInput.addEventListener("input", () => {
+            messageInput.name = idInput.value.trim();
+        });
+
+        console.log(messageInput.name);
+
         const scriptURL = 'https://script.google.com/macros/s/AKfycby14guX3CH8WQGu1JzAHekENlG1m-11qbCm6-Ua-jGfelb59DOKvkZ8lXIZXqJvJouYRg/exec';
         const form = document.forms['submit-to-google-sheet'];
         const msg = document.getElementById("msg");
         const loader = document.getElementById("loader");
 
-        // Form Submit Event Listener
         form.addEventListener('submit', e => {
             e.preventDefault();
+
+            // Show loader and hide any previous message
             loader.style.display = "block";
             msg.style.display = "none";
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                 .then(response => {
+                    // Hide loader
                     loader.style.display = "none";
+
+                    // Show success message
                     msg.innerHTML = "Message sent SUCCESSFULLY";
                     msg.style.display = "block";
 
+                    // Clear the message after 5 seconds
                     setTimeout(() => {
                         msg.innerHTML = "";
                         msg.style.display = "none";
                     }, 5000);
 
+                    // Reset the form
                     form.reset();
                 })
                 .catch(error => {
+                    // Hide loader
                     loader.style.display = "none";
+
+                    // Show error message
                     msg.innerHTML = "Error! " + error.message;
                     msg.style.display = "block";
                 });
