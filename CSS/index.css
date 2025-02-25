@@ -7,10 +7,12 @@
 
 .nav {
     width: 100%;
-    background: #2c2c2c21;
+    background: #ffffff07;
     color: #FFffff;
     font-weight: 700;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.5em;
+    /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+    
     letter-spacing: 3px;
     padding: 15px;
     position: fixed;
@@ -29,20 +31,26 @@
 }
 .container {
     display: flex;
+    font-size: 1.5em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /* background: #121212; */
-    background:  radial-gradient(circle, #473164, #0c0b20);
+    /* background:  radial-gradient(circle, #473164, #0c0b20); */
     color: #FFffff;
+
+    background: linear-gradient(rgba(20, 20, 20, 0.8), rgba(20, 20, 20, 0.8)), 
+                url('IST-BANNER-3.png') no-repeat center center/cover;
 }
 .content{
     padding: 20px;
 }
 .content button{
     padding: 10px;
+    height: 55px;
+    width: 300px;
     font-weight: 600;
+    font-size: 0.8em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -53,4 +61,46 @@
     color: #121212;
     text-decoration: none;
     transition: color 0.3s ease;
+}
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.footer-container  {
+    width: 98%;
+    text-decoration: none;
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1em;
+
+}
+.footer-container a {
+    color: #ae00ff88;
+    text-decoration: none;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.footer-container a:hover {
+    text-decoration: underline;
+}
+@media screen and (max-width: 768px) {
+
+    .container{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+    }
+    
 }
