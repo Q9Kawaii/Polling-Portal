@@ -65,14 +65,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Anonymous Authentication
-        firebase.auth().signInAnonymously()
-            .then(() => {
-                console.log("Signed in anonymously");
-                fetchLatestQuestion(); // Fetch question after login
-            })
-            .catch(error => console.error("Authentication Error:", error));
-
         // Function to Fetch Latest Question from Firestore
         function fetchLatestQuestion() {
             db.collection("Questions") // Ensure correct collection name (case-sensitive)
